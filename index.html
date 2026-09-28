@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吸引力法則 • 宇宙豐盛帳本</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Noto Serif TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti for abundance celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        morandi: {
+                            bg: '#F7F5F0',
+                            card: '#FFFFFF',
+                            text: '#4A4A48',
+                            muted: '#8C8A85',
+                            accent: '#D4AF37', // Gold accent
+                            softGold: '#FDFBF7',
+                            sage: '#8F9E8B',
+                            rose: '#D4A373'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', sans-serif;
+            background-color: #FAF8F5;
+            color: #4A4A48;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between py-8 px-4 sm:px-6">
+
+    <header class="max-w-xl mx-auto w-full text-center mb-8">
+        <div class="inline-flex items-center justify-center p-2 bg-amber-50 rounded-full mb-3 border border-amber-200/50 shadow-sm">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600 mr-2"></i>
+            <span class="text-xs font-medium tracking-wider text-amber-800 uppercase">宇宙豐盛迴圈系統</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-serif font-semibold text-stone-800 tracking-tight">無限豐盛帳本</h1>
+        <p class="text-xs sm:text-sm text-stone-500 mt-2">「你付出去的每一筆金錢，都是你向宇宙下達豐盛擴大的訂單。」</p>
+    </header>
+
+    <main class="max-w-xl mx-auto w-full space-y-6">
+
+        <!-- Abundance Balance Card -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden floating">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-amber-100/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-stone-200/40 rounded-full blur-2xl pointer-events-none"></div>
+
+            <h2 class="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-1">宇宙迴流總金額 (已化為豐盛資產)</h2>
+            <div class="my-3 flex items-center justify-center space-x-2">
+                <span class="text-4xl sm:text-5xl font-bold font-serif text-amber-700 tracking-tight" id="totalAbundance">NT$ 0</span>
+            </div>
+            <p id="abundanceQuote" class="text-xs text-stone-600 italic mt-2 bg-amber-50/60 py-2 px-4 rounded-xl inline-block border border-amber-100">
+                ✨ 每一筆支出，都是您財富擴張的印記。
+            </p>
+
+            <!-- Quick Stats Grid -->
+            <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-stone-100 text-left">
+                <div class="bg-stone-50/80 p-3 rounded-2xl">
+                    <span class="text-[11px] text-stone-400 uppercase block font-medium">循環筆數</span>
+                    <span id="statCount" class="text-lg font-semibold text-stone-700">0 筆</span>
+                </div>
+                <div class="bg-stone-50/80 p-3 rounded-2xl">
+                    <span class="text-[11px] text-stone-400 uppercase block font-medium">吸引力頻率</span>
+                    <span class="text-lg font-semibold text-amber-600 flex items-center">
+                        <i data-lucide="radio" class="w-4 h-4 mr-1 animate-pulse"></i> 高頻共振
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 sm:p-8 shadow-md">
+            <h3 class="text-sm font-semibold text-stone-700 uppercase tracking-wider mb-4 flex items-center">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-amber-600 mr-2"></i> 記錄一筆「豐盛流動」
+            </h3>
+            
+            <form id="abundanceForm" onsubmit="handleAddTransaction(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-stone-500 mb-1">花費項目名稱 / 體驗描述</label>
+                    <input type="text" id="itemTitle" required placeholder="例如：品嚐手沖咖啡、購買靈性書籍..." 
+                        class="w-full bg-stone-50/80 border border-stone-200 rounded-2xl px-4 py-3 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-stone-500 mb-1">實際付出的金額 (NT$)</label>
+                        <input type="number" id="itemAmount" required min="1" placeholder="輸入數字..." 
+                            class="w-full bg-stone-50/80 border border-stone-200 rounded-2xl px-4 py-3 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-stone-500 mb-1">宇宙回向倍數 (吸引力法則加乘)</label>
+                        <select id="multiplier" class="w-full bg-stone-50/80 border border-stone-200 rounded-2xl px-4 py-3 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition">
+                            <option value="1">1x 穩定迴流 (豐盛如常)</option>
+                            <option value="2" selected>2x 雙倍回向 (財富倍增)</option>
+                            <option value="5">5x 五倍豐盛 (奇蹟顯化)</option>
+                            <option value="10">10x 十倍擴大 (無限磁場)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-stone-500 mb-1">感謝心語 (感謝這筆金錢帶來的價值與美好)</label>
+                    <input type="text" id="itemGratitude" placeholder="例如：感謝這杯咖啡為我帶來清晰的靈感與好心情..." 
+                        class="w-full bg-stone-50/80 border border-stone-200 rounded-2xl px-4 py-3 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition">
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-stone-900 hover:bg-stone-800 text-amber-100 font-medium py-3.5 px-6 rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm tracking-wide">
+                    <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+                    <span>轉化為宇宙豐盛能量</span>
+                </button>
+            </form>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 sm:p-8 shadow-md">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold text-stone-700 uppercase tracking-wider flex items-center">
+                    <i data-lucide="history" class="w-4 h-4 text-amber-600 mr-2"></i> 豐盛流動足跡
+                </h3>
+                <button onclick="clearHistory()" class="text-xs text-stone-400 hover:text-rose-600 transition">清除記錄</button>
+            </div>
+
+            <div id="transactionList" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                <!-- Dynamically populated transaction items -->
+            </div>
+            
+            <div id="emptyState" class="text-center py-8 text-stone-400 text-xs">
+                尚未記錄豐盛足跡，請在上方輸入您的第一筆支出。
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-xl mx-auto w-full text-center mt-12 text-xs text-stone-400 space-y-1">
+        <p>吸引力法則記帳程式 • 錢不是不見了，只是變成了你喜歡的樣子。</p>
+        <p class="text-[10px] text-stone-400">© 2026 Universe Ledger. Designed for High Vibrations.</p>
+    </footer>
+
+    <!-- Custom Floating Notification Modal -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-stone-900 text-amber-100 px-5 py-3 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-3 z-50 border border-amber-500/30">
+        <i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>
+        <span id="toastMessage" class="text-xs sm:text-sm font-medium"></span>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // State variables
+        let transactions = JSON.parse(localStorage.getItem('universe_transactions')) || [];
+
+        const quotes = [
+            "✨ 每一筆支出，都是您財富擴張的印記。",
+            "🌟 金錢是流動的愛的能量，付出去的都會成倍流回。",
+            "💫 你對金錢充滿感謝，金錢便會加倍向你靠近。",
+            "🔮 宇宙永遠在供應你所需的一切，你正走在豐盛的道路上。",
+            "🌿 花錢是信任宇宙豐盛源源不絕的最高表現。"
+        ];
+
+        // Random initial quote
+        document.getElementById('abundanceQuote').innerText = quotes[Math.floor(Math.random() * quotes.length)];
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function handleAddTransaction(e) {
+            e.preventDefault();
+            const title = document.getElementById('itemTitle').value;
+            const baseAmount = parseFloat(document.getElementById('itemAmount').value);
+            const multiplier = parseInt(document.getElementById('multiplier').value);
+            const gratitude = document.getElementById('itemGratitude').value || '感謝宇宙源源不絕的供應。';
+
+            // Counter-intuitive calculation: Spent amount * multiplier becomes EARNED/ABUNDANCE amount
+            const abundanceValue = baseAmount * multiplier;
+
+            const newTx = {
+                id: Date.now(),
+                title,
+                baseAmount,
+                multiplier,
+                abundanceValue,
+                gratitude,
+                date: new Date().toLocaleDateString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+            };
+
+            transactions.unshift(newTx);
+            saveAndRender();
+
+            // Reset form
+            document.getElementById('abundanceForm').reset();
+            document.getElementById('multiplier').value = "2"; // reset to default multiplier
+
+            // Trigger confetti
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#D4AF37', '#8F9E8B', '#D4A373', '#FAF8F5']
+            });
+
+            showToast(`顯化成功！吸引到 +NT$ ${abundanceValue.toLocaleString()} 豐盛磁場！`);
+        }
+
+        function deleteTransaction(id) {
+            transactions = transactions.filter(tx => tx.id !== id);
+            saveAndRender();
+            showToast('已釋放該筆紀錄');
+        }
+
+        function clearHistory() {
+            if (confirm('確定要重置所有宇宙流動紀錄嗎？')) {
+                transactions = [];
+                saveAndRender();
+                showToast('已重置豐盛帳本');
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('universe_transactions', JSON.stringify(transactions));
+            render();
+        }
+
+        function render() {
+            const listEl = document.getElementById('transactionList');
+            const emptyEl = document.getElementById('emptyState');
+            const totalEl = document.getElementById('totalAbundance');
+            const statCountEl = document.getElementById('statCount');
+
+            listEl.innerHTML = '';
+
+            let totalAbundance = 0;
+
+            if (transactions.length === 0) {
+                emptyEl.classList.remove('hidden');
+            } else {
+                emptyEl.classList.add('hidden');
+                transactions.forEach(tx => {
+                    totalAbundance += tx.abundanceValue;
+
+                    const item = document.createElement('div');
+                    item.className = "bg-stone-50/90 border border-stone-200/60 p-4 rounded-2xl flex items-center justify-between transition hover:border-amber-300";
+                    item.innerHTML = `
+                        <div class="space-y-1 pr-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-semibold text-stone-800 text-sm">${escapeHtml(tx.title)}</span>
+                                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-medium">${tx.multiplier}x 迴向</span>
+                            </div>
+                            <p class="text-xs text-stone-500 italic">“${escapeHtml(tx.gratitude)}”</p>
+                            <span class="text-[10px] text-stone-400 block">${tx.date}</span>
+                        </div>
+                        <div class="text-right flex items-center space-x-3">
+                            <div>
+                                <span class="text-xs text-stone-400 block line-through">原支出: NT$ ${tx.baseAmount.toLocaleString()}</span>
+                                <span class="text-sm sm:text-base font-bold font-serif text-amber-700">+NT$ ${tx.abundanceValue.toLocaleString()}</span>
+                            </div>
+                            <button onclick="deleteTransaction(${tx.id})" class="text-stone-300 hover:text-rose-500 transition p-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    `;
+                    listEl.appendChild(item);
+                });
+            }
+
+            totalEl.innerText = `NT$ ${totalAbundance.toLocaleString()}`;
+            statCountEl.innerText = `${transactions.length} 筆`;
+            
+            lucide.createIcons();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Initial render on load
+        render();
+    </script>
+</body>
+</html>
